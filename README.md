@@ -1,14 +1,12 @@
-# Project
+## Steps to run locally
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
-
-As the maintainer of this project, please make a few updates:
-
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+# Prerequisites
+* Install Git tools for your OS: (https://git-scm.com/downloads)
+* Clone this repo: `git clone https://github.com/OfficeDev/msteams-sample-contoso-hr-talent-app-node.git`
+* Install Node: https://nodejs.org/en/download/
+* Install TypeScript via npm: `npm install -g typescript`
+* Install a tunnelling service. These instructions assume you are using ngrok: https://ngrok.com/
+* Start the tunneling service, e.g. ngrok http 3978 and copy the https:// URL it generates to the clipboard, e.g. https://2fb7b5e8.ngrok.io
 
 ## Contributing
 

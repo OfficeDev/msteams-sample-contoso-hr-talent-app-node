@@ -1,0 +1,61 @@
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.4",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "${title}",
+            "wrap": true,
+            "weight": "Bolder",
+            "size": "Medium"
+        },
+        {
+            "type": "FactSet",
+            "facts": [
+                {
+                    "title": "Position ID:",
+                    "value": "${externalId}"
+                },
+                {
+                    "title": "Location:",
+                    "value": "${location.locationAddress}"
+                },
+                {
+                    "title": "Days open:",
+                    "value": "${daysOpen}"
+                },
+                {
+                    "title": "Applicants:",
+                    "value": "${count(candidates)}"
+                },
+                {
+                    "title": "Hiring Manager:",
+                    "value": "${hiringManager.name}"
+                }
+            ]
+        },
+        {
+            "type": "TextBlock",
+            "text": "Description: ${description}",
+            "wrap": true
+        }
+    ],
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Share position",
+            "$when": "${renderActions}",
+            "data": {
+                "commandId": "sharePosition",
+                "positionId": "${id}"
+            },
+            "style": "positive"
+        },
+        {
+            "type": "Action.Submit",
+            "title": "Close",
+            "$when": "${renderActions}"
+        }
+    ]
+}

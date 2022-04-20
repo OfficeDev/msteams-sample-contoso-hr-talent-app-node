@@ -1,0 +1,42 @@
+[
+  {
+    "city": "San Francisco",
+    "state": "CA"
+  },
+  {
+    "city": "London"
+  },
+  {
+    "city": "Singapore"
+  },
+  {
+    "city": "Dubai"
+  },
+  {
+    "city": "Frankfurt"
+  },
+  {
+    "city": "New York",
+    "state": "NY"
+  },
+  {
+    "city": "Chicago",
+    "state": "IL"
+  },
+  {
+    "city": "Dallas",
+    "state": "TX"
+  },
+  {
+    "city": "Miami",
+    "state": "FL"
+  },
+  {
+    "city": "Los Angeles",
+    "state": "CA"
+  },
+  {
+    "city": "Denver",
+    "state": "CO"
+  }
+]

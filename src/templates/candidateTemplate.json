@@ -1,0 +1,224 @@
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.4",
+    "body": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "size": "Large",
+                            "style": "Person",
+                            "url": "${profilePicture}"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "wrap": true,
+                            "text": "${name}",
+                            "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "wrap": true,
+                            "text": "${summary}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "FactSet",
+            "facts": [
+                {
+                    "title": "Current role:",
+                    "value": "${currentRole}"
+                },
+                {
+                    "title": "Location:",
+                    "value": "${location.locationAddress}"
+                },
+                {
+                    "title": "Stage:",
+                    "value": "${stage}"
+                },
+                {
+                    "title": "Position applied:",
+                    "value": "${position.title}"
+                },
+                {
+                    "title": "Date applied:",
+                    "value": "{{DATE(${formatDateTime(dateApplied, 'yyyy-MM-ddTHH:mm:ssZ')}, SHORT)}}"
+                },
+                {
+                    "title": "Phone number:",
+                    "value": "${phone}"
+                }
+            ]
+        },
+        {
+            "type": "TextBlock",
+            "wrap": true,
+            "text": "${status}",
+            "$when": "${status != ''}",
+            "color": "good",
+            "horizontalAlignment":"center",
+            "weight":"bolder"
+        }
+    ],
+    "actions": [
+        {
+            "type": "Action.ShowCard",
+            "title": "Schedule an interview",
+            "$when": "${renderActions}",
+            "card": {
+                "type": "AdaptiveCard",
+                "body": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Set interview date for ${name}",
+                        "wrap": true,
+                        "weight": "Bolder",
+                        "size": "Large"
+                    },
+                    {
+                        "type": "ColumnSet",
+                        "columns": [
+                            {
+                                "type": "Column",
+                                "width": "auto",
+                                "items": [
+                                    {
+                                        "type": "Image",
+                                        "url": "${profilePicture}",
+                                        "size": "Medium",
+                                        "style": "Person"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "Column",
+                                "width": "stretch",
+                                "items": [
+                                    {
+                                        "type": "TextBlock",
+                                        "wrap": true,
+                                        "text": "Position: ${position.title}"
+                                    },
+                                    {
+                                        "type": "TextBlock",
+                                        "wrap": true,
+                                        "text": "Position ID: ${positionId}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Input.ChoiceSet",
+                        "placeholder": "Select an interviewer",
+                        "id": "interviewerId",
+                        "choices": [
+                            {
+                                "$data": "${recruiters}",
+                                "title": "${name}",
+                                "value": "${id}"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Input.Date",
+                        "placeholder": "Select a date for the interview",
+                        "id": "interviewDate"
+                    },
+                    {
+                        "type": "Input.ChoiceSet",
+                        "choices": [
+                            {
+                                "title": "Phone screen",
+                                "value": "phoneScreen"
+                            },
+                            {
+                                "title": "Full loop",
+                                "value": "fullLoop"
+                            },
+                            {
+                                "title": "Follow-up",
+                                "value": "folluwUp"
+                            }
+                        ],
+                        "placeholder": "Placeholder text",
+                        "id": "interviewType",
+                        "value": "phoneScreen"
+                    },
+                    {
+                        "type": "Input.Toggle",
+                        "title": "Remote interview",
+                        "id": "isRemote"
+                    },
+                    {
+                        "type": "ActionSet",
+                        "actions": [
+                            {
+                                "type": "Action.Execute",
+                                "title": "Schedule",
+                                "style": "positive",
+                                "verb": "ScheduleInterview",
+                                "data": {
+                                    "candidateId": "${id}"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Action.OpenUrl",
+            "title": "Open candidate feedback",
+            "url": "${candidateFeedbackUrl}",
+            "$when": "${hasComments}"
+        },
+        {
+            "type": "Action.ShowCard",
+            "title": "Leave comment",
+            "$when": "${renderActions}",
+            "card": {
+                "type": "AdaptiveCard",
+                "body": [
+                    {
+                        "type": "Input.Text",
+                        "placeholder": "Leave an internal comment for this candidate",
+                        "isMultiline": true,
+                        "id": "comment"
+                    },
+                    {
+                        "type": "ActionSet",
+                        "actions": [
+                            {
+                                "type": "Action.Execute",
+                                "title": "Submit",
+                                "style": "positive",
+                                "verb": "LeaveComment",
+                                "data": {
+                                    "commandId": "LeaveComment",
+                                    "candidateId": "${id}"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
