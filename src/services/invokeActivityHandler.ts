@@ -1,5 +1,5 @@
 import { parseBool } from "adaptivecards";
-import { AdaptiveCardInvokeResponse, Attachment, CardFactory, FileConsentCardResponse, InvokeResponse, MessageFactory, MessagingExtensionAction, MessagingExtensionActionResponse, MessagingExtensionAttachment, MessagingExtensionQuery, MessagingExtensionResponse, TurnContext } from "botbuilder";
+import { AdaptiveCardInvokeResponse, Attachment, CardFactory, FileConsentCardResponse, InvokeResponse, MessageFactory, MessagingExtensionAction, MessagingExtensionActionResponse, MessagingExtensionAttachment, MessagingExtensionQuery, MessagingExtensionResponse, TaskModuleRequest, TaskModuleTaskInfo, TurnContext } from "botbuilder";
 import { convertInvokeActionDataToComment, convertInvokeActionDataToInterview, convertInvokeActionDataToPosition, Position } from "./data/dtos";
 import { ServiceContainer } from "./data/serviceContainer";
 import { TokenProvider } from "./tokenProvider";
@@ -26,6 +26,24 @@ export class InvokeActivityHandler {
         return {
             status: 200
         };
+    }
+
+    public async handleTaskModuleFetch(taskModuleRequest: TaskModuleRequest): Promise<TaskModuleTaskInfo> {
+
+        const candidate = await this.services.candidateService.getById(taskModuleRequest.data.candidateId);
+
+        let baseUrl = <string>process.env.BaseUrl;
+
+        while(baseUrl.charAt(baseUrl.length-1)=="/") {
+            baseUrl = baseUrl.substring(0,baseUrl.length-1);
+        }
+
+        return {
+            url: `${baseUrl}/StaticViews/CandidateFeedback.html?candidateId=${candidate?.id}`,
+            title: `Feedback for ${candidate?.name}`,
+            width: "large",
+            height: "large"
+        }
     }
 
     public async handleMessagingExtensionSubmitAction(action: MessagingExtensionAction): Promise<MessagingExtensionActionResponse> {
