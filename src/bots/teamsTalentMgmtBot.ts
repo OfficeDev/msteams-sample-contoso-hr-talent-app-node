@@ -1,4 +1,4 @@
-import { TeamsActivityHandler, TurnContext, UserState, Activity, SigninStateVerificationQuery, MessageFactory, AdaptiveCardInvokeResponse, AdaptiveCardInvokeValue, MessagingExtensionQuery, MessagingExtensionResponse, MessagingExtensionAction, MessagingExtensionActionResponse, FileConsentCardResponse, StatePropertyAccessor } from "botbuilder";
+import { TeamsActivityHandler, TurnContext, UserState, Activity, SigninStateVerificationQuery, MessageFactory, AdaptiveCardInvokeResponse, AdaptiveCardInvokeValue, MessagingExtensionQuery, MessagingExtensionResponse, MessagingExtensionAction, MessagingExtensionActionResponse, FileConsentCardResponse, StatePropertyAccessor, TaskModuleRequest, TaskModuleResponse } from "botbuilder";
 import { CommandBase } from "../commands/commandBase";
 import { HelpCommand } from "../commands/helpCommand";
 import { PositionDetailsCommand } from "../commands/positionDetailsCommand";
@@ -125,6 +125,16 @@ export class TeamsTalentMgmtBot extends TeamsActivityHandler {
     // if `initialRun` was set
     protected async handleTeamsMessagingExtensionQuery(context: TurnContext, query: MessagingExtensionQuery): Promise<MessagingExtensionResponse> {
         return await this.invokeHandler.handleMessagingExtensionQuery(context, query, context.activity.channelData.source.name);
+    }
+
+    // Handles clicking an adaptive card button with `Action.Submit` _and_ `data/msteams/type = task/fetch`
+    protected async handleTeamsTaskModuleFetch(context: TurnContext, taskModuleRequest: TaskModuleRequest): Promise<TaskModuleResponse> {
+        return {
+            task: {
+                type: "continue",
+                value: await this.invokeHandler.handleTaskModuleFetch(taskModuleRequest)
+            }
+        }
     }
 
     // Handles clicking an adaptive card button with `Action.Execute`

@@ -184,10 +184,15 @@
             }
         },
         {
-            "type": "Action.OpenUrl",
+            "type": "Action.Submit",
             "title": "Open candidate feedback",
-            "url": "${candidateFeedbackUrl}",
-            "$when": "${hasComments}"
+            "$when": "${hasComments}",
+            "data":{
+                "candidateId": "${id}",
+                "msteams": {
+                    "type": "task/fetch"
+                }
+            }
         },
         {
             "type": "Action.ShowCard",
