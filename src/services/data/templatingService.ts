@@ -27,7 +27,6 @@ export class TemplatingService {
                 recruiters,
                 hasComments: candidate.comments && candidate.comments.length > 0,
                 status: status || "",
-                candidateFeedbackUrl: `https://teams.microsoft.com/l/task/${process.env.TeamsAppId}?url=${encodeURIComponent(`${process.env.BaseUrl}/StaticViews/CandidateFeedback.html?candidateId=${candidate.id}`)}&title=${encodeURIComponent(`Feedback for ${candidate.name}`)}&completionBotId=${process.env.MicrosoftAppId}&height=large&width=large`,
                 renderActions
             }
         });
