@@ -6,7 +6,7 @@
     "adaptivecards-templating": "^2.2.0",
     "botbuilder": "^4.15.0",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3",
+    "express": "^4.20.0",
     "isomorphic-fetch": "^3.0.0",
     "jsonwebtoken": "^9.0.0",
     "jwks-rsa": "^2.0.5"
